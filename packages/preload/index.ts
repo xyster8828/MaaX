@@ -26,7 +26,11 @@ const ipc = {
   },
   off: (channel: IpcRendererHandleEvent, listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void): Electron.IpcRenderer => {
     ipcRenderer.send('main.Util:LogSilly', `ipcRenderer event "${channel}" unregistered`)
-    return ipcRenderer.off(channel, listener)
+    return ipcRenderer.removeListener(channel, listener)
+  },
+  removeAllListeners: (channel: IpcRendererHandleEvent): Electron.IpcRenderer => {
+    ipcRenderer.send('main.Util:LogSilly', `ipcRenderer event "${channel}" unregistered`)
+    return ipcRenderer.removeAllListeners(channel)
   }
 }
 

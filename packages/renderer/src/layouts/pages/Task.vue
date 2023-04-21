@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, provide, watch} from 'vue'
+import { computed, ref, provide, watch, onMounted, onUnmounted} from 'vue'
 import { NSpace, NButton, NSwitch, NIcon, NTooltip, NSelect, NInput, SelectOption } from 'naive-ui'
 import _ from 'lodash'
 import Draggable from 'vuedraggable'
@@ -202,6 +202,12 @@ const taskGroupOptions = computed(() => {
 provide('update:configuration', handleTaskConfigurationUpdate)
 const currentTaskGroupIndexValue = ref(taskStore.deviceTasks[uuid.value].current)
 
+onMounted(() => {
+  window.ipcRenderer.on('renderer.CronManager:runTask', handleStart)
+})
+onUnmounted(() => {
+  window.ipcRenderer.removeAllListeners('renderer.CronManager:runTask')
+})
 </script>
 
 <template>

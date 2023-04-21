@@ -34,6 +34,10 @@ import { NButton, NIcon, NAnchor, NAnchorLink } from 'naive-ui'
         href="#appearance"
       />
       <NAnchorLink
+        title="定时执行"
+        href="#timer"
+      />
+      <NAnchorLink
         title="缓存清理"
         href="#clear"
       />

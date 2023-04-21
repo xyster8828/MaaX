@@ -81,6 +81,7 @@
     "@tigerconnect/ref-napi": "4.0.0-tc8",
     "@types/lodash": "^4.14.191",
     "axios": "^0.27.2",
+    "cron": "^2.3.0",
     "crypto-js": "^4.1.1",
     "electron-acrylic-window": "https://github.com/MaaAssistantArknights/electron-acrylic-window.git#main",
     "electron-store": "^8.1.0",

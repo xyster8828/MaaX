@@ -16,6 +16,7 @@ import ComponentManager from '@main/componentManager'
 import CoreLoader from '@main/coreLoader'
 import DeviceDetector from '@main/deviceDetector'
 import DownloadManager from './downloadManager'
+import CronManager from './cronManager'
 
 // Disable GPU Acceleration for Windows 7
 if (release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -45,7 +46,8 @@ async function createApp (): Promise<void> {
     CoreLoader,
     DeviceDetector,
     DownloadManager,
-    ComponentManager
+    ComponentManager,
+    CronManager
   ]
 
   for (const Ctor of modulesCtor) {
@@ -56,6 +58,11 @@ async function createApp (): Promise<void> {
       logger.error(`module ${Ctor.name} load failed!`)
     }
   }
+
+  let storageManager=new StorageManager()
+  let cronManager=new CronManager()
+  cronManager.updateCronJobs(storageManager.get('setting').timers)
+
   useHooks()
   if (isInDev()) {
     logger.warn('You are in development mode')

@@ -25,6 +25,7 @@ export interface SettingState {
   _locale: Locale
   monsters: boolean
   touchMode: TouchMode
+  timers: TimerConfig[]
 }
 
 export interface SettingAction {
@@ -36,6 +37,7 @@ export interface SettingAction {
   changeRogueTheme: (theme: RogueTheme) => void
   toggleMonsters: () => void
   setTouchMode: (mode: TouchMode) => void
+  setTimer: (timerConfig: TimerConfig, index:number) => void
 }
 
 export interface SettingGetters {
@@ -57,7 +59,41 @@ const useSettingStore = defineStore<'setting', SettingState, SettingGetters, Set
         },
         _locale: Locale.zhCN,
         monsters: false,
-        touchMode: TouchMode.minitouch
+        touchMode: TouchMode.minitouch,
+        timers: [
+          {
+            time: '00:00:00',
+            enabled: false,
+          },
+          {
+            time: '03:00:00',
+            enabled: false,
+          },
+          {
+            time: '06:00:00',
+            enabled: false,
+          },
+          {
+            time: '09:00:00',
+            enabled: false,
+          },
+          {
+            time: '12:00:00',
+            enabled: false,
+          },
+          {
+            time: '15:00:00',
+            enabled: false,
+          },
+          {
+            time: '18:00:00',
+            enabled: false,
+          },
+          {
+            time: '21:00:00',
+            enabled: false,
+          },
+        ]
       }
     },
     getters: {
@@ -104,6 +140,9 @@ const useSettingStore = defineStore<'setting', SettingState, SettingGetters, Set
       },
       setTouchMode (mode: TouchMode) {
         this.touchMode = mode
+      },
+      setTimer(timerConfig: TimerConfig, index: number) {
+        this.timers[index] = timerConfig
       }
     }
   }

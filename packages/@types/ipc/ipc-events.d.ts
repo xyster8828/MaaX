@@ -74,6 +74,7 @@ type IpcRendererHandleEvent =
   | 'renderer.ComponentManager:installInterrupted'
   | 'renderer.ComponentManager:installDone'
   | 'renderer.Device:getScreenshot'
+  | 'renderer.CronManager:runTask'
 
 interface IpcMainEvent<T> {
   name: IpcMainHandleEvent

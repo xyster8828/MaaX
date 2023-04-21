@@ -7,7 +7,7 @@ import { convertToCoreTaskConfiguration } from './task_helper'
 let selfIncreasedId = 1000000
 const genUiTaskId = (): number => { selfIncreasedId += 1; return selfIncreasedId }
 
-export async function runStartEmulator (uuid: string, task: Task): Promise<void> {
+export async function runStartEmulator(uuid: string, task: Task): Promise<void> {
   const taskStore = useTaskStore()
   task.task_id = genUiTaskId()
   // 不await
@@ -15,7 +15,7 @@ export async function runStartEmulator (uuid: string, task: Task): Promise<void>
   window.ipcRenderer.invoke('main.DeviceDetector:startEmulator', task.configurations.commandLine)
 }
 
-async function runTaskEmulator (uuid: string, task: Task): Promise<void> {
+async function runTaskEmulator(uuid: string, task: Task): Promise<void> {
   const taskStore = useTaskStore()
   task.task_id = genUiTaskId()
   taskStore.updateTaskStatus(uuid, task.task_id, 'processing', 0)
@@ -61,12 +61,12 @@ async function runTaskEmulator (uuid: string, task: Task): Promise<void> {
   }, 10000)
 }
 
-async function runTaskShutdown (uuid: string, task: Task): Promise<void> {
+async function runTaskShutdown(uuid: string, task: Task): Promise<void> {
   const taskStore = useTaskStore()
   // TODO
 }
 
-async function runTaskIdle (uuid: string, task: Task): Promise<void> {
+async function runTaskIdle(uuid: string, task: Task): Promise<void> {
   const taskStore = useTaskStore()
   task.task_id = genUiTaskId()
   taskStore.updateTaskStatus(uuid, task.task_id, 'processing', 0)
@@ -77,11 +77,11 @@ async function runTaskIdle (uuid: string, task: Task): Promise<void> {
   }, task.configurations.delay as number * 1000)
 }
 
-export async function runTasks (uuid: string): Promise<void> {
+export async function runTasks(uuid: string): Promise<void> {
   const taskStore = useTaskStore()
   const tasks = taskStore.getCurrentTaskGroup(uuid)?.tasks
   // 寻找第一个可用的任务
-  const task = tasks?.find((task) => task.enable && task.status === 'idle')
+  const task = tasks?.find((task) => task.enable && ['idle', 'stopped'].includes(task.status))
   if (task) {
     switch (task.name) {
       case 'emulator': {

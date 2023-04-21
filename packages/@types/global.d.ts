@@ -15,6 +15,9 @@ declare global {
       off: (
         channel: IpcRendererHandleEvent,
         listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void
+      ) => Electron.IpcRenderer,
+      removeAllListeners: (
+        channel: IpcRendererHandleEvent
       ) => Electron.IpcRenderer
     }
     removeLoading: () => void
